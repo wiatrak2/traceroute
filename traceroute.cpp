@@ -1,14 +1,12 @@
 #include "utils.h"
 #include "send.h"
 #include "receive.h"
-#include <errno.h>
 
 int main( int argc, const char* argv[] )
 {
 
-	if(! arg_valid( argc, argv ) );
+	if(! arg_valid( argc, argv ) )
 		return -1;
-		
 
 	int sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
 	if (sockfd < 0) {

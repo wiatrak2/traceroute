@@ -2,9 +2,12 @@
 #define utils_h
 
 #include <netinet/ip.h>
+#include <netinet/ip_icmp.h>
 #include <arpa/inet.h>
 #include <iostream>
 #include <stdint.h>
+#include <errno.h>
+#include <cassert>
 #include <regex>
 
 #define ARGV_ERR 0
