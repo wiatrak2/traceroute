@@ -6,6 +6,7 @@
 #include <arpa/inet.h>
 #include <iostream>
 #include <stdint.h>
+#include <stddef.h>
 #include <errno.h>
 #include <cassert>
 #include <regex>

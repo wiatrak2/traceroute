@@ -6,7 +6,7 @@
 class Sender
 {
 
-
+	struct icmphdr create_icmphdr( int echo_id, int echo_seq );
 
 public:
 
@@ -17,7 +17,7 @@ public:
 	Sender( const Sender& s );
 	Sender& operator = ( const Sender& s );
 
-	struct icmphdr create_icmphdr( int echo_id, int echo_seq );
+	void send_packet( int ttl, int& socket, int id, int seq );
 	
 };
 

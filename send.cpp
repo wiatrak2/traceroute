@@ -2,7 +2,7 @@
 
 Sender::Sender( )
 {
-	throw std::runtime_error(" Wrong Sender constructor ");
+	throw std::runtime_error( " Wrong Sender constructor " );
 }
 
 Sender::Sender( const char* ip_addr )
@@ -10,7 +10,6 @@ Sender::Sender( const char* ip_addr )
 	bzero( &recipient, sizeof( recipient ) );
 	recipient.sin_family = AF_INET;
 	inet_pton( AF_INET, ip_addr, &recipient.sin_addr );
-	printf("%s\n", ip_addr);
 }
 
 Sender::Sender( const Sender& s )
@@ -21,6 +20,15 @@ Sender& Sender::operator = ( const Sender& s )
 {
 	recipient = s.recipient;
 	return *this;
+}
+
+void Sender::send_packet( int ttl, int& socket, int id, int seq )
+{
+	struct icmphdr header = create_icmphdr( id, seq );
+	setsockopt ( socket, IPPROTO_IP, IP_TTL, &ttl, sizeof( int ) );
+	ssize_t bytes_sent = sendto( socket, &header, sizeof( header ), 0, ( struct sockaddr* ) &recipient, sizeof( recipient ) );
+	if( ! bytes_sent )
+		throw std::runtime_error( " Couldn't sent a packet " );
 }
 
 
