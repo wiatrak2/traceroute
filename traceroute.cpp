@@ -15,7 +15,6 @@ int main( int argc, const char* argv[] )
 		return EXIT_FAILURE;
 	}
 
-
 	// test sending
 
 	int pid = getpid();
@@ -27,12 +26,12 @@ int main( int argc, const char* argv[] )
 	for( int i = 0 ; i < 5 ; ++ i )
 	{
 
-		s.send_packet( 2, sockfd, pid, num++ );
-		while(1)
-		{
-			if( r.receive_packet() )
-				break;
-		}
+		s.send_packet( 30, sockfd, pid, num++ );
+	
+		
+		 r.receive_packet();
+			
+		
 	}
 
 

@@ -1,6 +1,6 @@
 #include "receive.h"
 
-int Receiver::receive_packet()
+Packet Receiver::receive_packet()
 {
 	struct sockaddr_in 	sender;	
 	socklen_t 			sender_len = sizeof(sender);
@@ -9,7 +9,7 @@ int Receiver::receive_packet()
 	ssize_t packet_len = recvfrom (*socketfd, buffer, IP_MAXPACKET, 0, (struct sockaddr*)&sender, &sender_len);
 	if (packet_len < 0) {
 		fprintf(stderr, "recvfrom error: %s\n", strerror(errno)); 
-		return EXIT_FAILURE;
+		return Packet( );
 	}
 
 	char sender_ip_str[20]; 
@@ -21,14 +21,16 @@ int Receiver::receive_packet()
 
 	if( icmp_header->type == ICMP_ECHOREPLY )
 	{
-		printf("ECHO REPLY\n");
+		printf("ECHO REPLY ");
+		return Packet( icmp_header->un.echo.id, icmp_header->un.echo.sequence, 0, true, sender_ip_str );
 	}
 
 	if( icmp_header->type == ICMP_TIME_EXCEEDED )
 	{
-		printf("TIME EXCEEDED\n");
+		printf("TIME EXCEEDED ");
+		return Packet();//( ip_header->icmp_id, ip_header->icmp_seq, 0, false, sender_ip_str );
 	}
 
-	return 1;
+	return Packet();
 
 }

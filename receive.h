@@ -2,11 +2,12 @@
 #define receive_h 
 
 #include "utils.h"
+#include "packet.h"
 
 class Receiver
 {
 	int* socketfd;
-		
+
 public:
 
 	Receiver()
@@ -17,7 +18,7 @@ public:
 	: socketfd { socketfd }
 	{ }
 
-	int receive_packet();
+	Packet receive_packet();
 
 
 };
