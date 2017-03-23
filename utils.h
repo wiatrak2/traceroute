@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <stdint.h>
+#include <string.h>
 #include <unistd.h>
 #include <errno.h>
 #include <cassert>
@@ -15,7 +16,7 @@
 #define ARGV_ERR 0
 
 int arg_valid ( int argc, const char* argv[] );
-
+void print_as_bytes (unsigned char* buff, ssize_t length);
 u_int16_t compute_icmp_checksum ( const void *buff, int length );
 
 #endif /* utils_h */

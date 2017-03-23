@@ -28,3 +28,9 @@ u_int16_t compute_icmp_checksum (const void *buff, int length)
 	sum = (sum >> 16) + (sum & 0xffff);
 	return (u_int16_t)(~(sum + (sum >> 16)));
 }
+
+void print_as_bytes (unsigned char* buff, ssize_t length)
+{
+	for (ssize_t i = 0; i < length; i++, buff++)
+		printf ("%.2x ", *buff);	
+}

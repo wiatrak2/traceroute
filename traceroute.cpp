@@ -18,16 +18,22 @@ int main( int argc, const char* argv[] )
 	// test sending
 
 	int pid = getpid();
-	int num = 0;
+	int num = 10;
 
 	Sender s( argv[ 1 ] );
+	Receiver r( &sockfd );
 
 	for( int i = 0 ; i < 5 ; ++ i )
 	{
 
-		s.send_packet( 30, sockfd, pid, num++ );
-
-
+		s.send_packet( 2, sockfd, pid, num++ );
+		while(1)
+		{
+			if( r.receive_packet() )
+				break;
+		}
+	}
+		/*
 		struct sockaddr_in 	sender;	
 		socklen_t 			sender_len = sizeof(sender);
 		u_int8_t 			buffer[IP_MAXPACKET];
@@ -46,14 +52,14 @@ int main( int argc, const char* argv[] )
 		ssize_t				ip_header_len = 4 * ip_header->ihl;
 
 		printf ("IP header: "); 
-		//print_as_bytes (buffer, ip_header_len);
+		print_as_bytes (buffer, ip_header_len);
 		printf("\n");
 
 		printf ("IP data:   ");
-		//print_as_bytes (buffer + ip_header_len, packet_len - ip_header_len);
+		print_as_bytes (buffer + ip_header_len, packet_len - ip_header_len);
 		printf("\n\n");
 	}
-
+	*/
 
 	return 0;
 }
