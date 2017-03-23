@@ -5,8 +5,9 @@
 #include <netinet/ip_icmp.h>
 #include <arpa/inet.h>
 #include <iostream>
+#include <cstdlib>
 #include <stdint.h>
-#include <stddef.h>
+#include <unistd.h>
 #include <errno.h>
 #include <cassert>
 #include <regex>
