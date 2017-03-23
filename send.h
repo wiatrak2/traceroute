@@ -17,7 +17,7 @@ public:
 	Sender( const Sender& s );
 	Sender& operator = ( const Sender& s );
 
-	void send_packet( int ttl, int& socket, int id, int seq );
+	void send_packet( int ttl, const int& socket, int id, int seq );
 	
 };
 

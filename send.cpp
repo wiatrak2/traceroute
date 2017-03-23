@@ -22,7 +22,7 @@ Sender& Sender::operator = ( const Sender& s )
 	return *this;
 }
 
-void Sender::send_packet( int ttl, int& socket, int id, int seq )
+void Sender::send_packet( int ttl, const int& socket, int id, int seq )
 {
 	struct icmphdr header = create_icmphdr( id, seq );
 	setsockopt ( socket, IPPROTO_IP, IP_TTL, &ttl, sizeof( int ) );

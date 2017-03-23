@@ -5,9 +5,10 @@
 
 class Receiver
 {
-	
-public:
 	int* socketfd;
+		
+public:
+
 	Receiver()
 	: socketfd{ nullptr }
 	{ throw std::runtime_error( " Wrong Receiver constructor " ); }
