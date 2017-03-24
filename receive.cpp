@@ -22,7 +22,7 @@ Packet Receiver::receive_packet()
 	if( icmp_header->type == ICMP_ECHOREPLY )
 	{
 		printf("ECHO REPLY ");
-		return Packet( icmp_header->un.echo.id, icmp_header->un.echo.sequence, sender_ip_str, std::clock() );
+		return Packet( icmp_header->un.echo.id, icmp_header->un.echo.sequence + 1, sender_ip_str, std::clock() );
 	}
 
 	if( icmp_header->type == ICMP_TIME_EXCEEDED )
@@ -33,7 +33,7 @@ Packet Receiver::receive_packet()
 		icmp_packet += 4 * ((struct ip*) icmp_packet)->ip_hl;
 		struct icmp* icmp_time_ex = (struct icmp*) icmp_packet;
 
-		return Packet( icmp_time_ex->icmp_id, icmp_time_ex->icmp_seq, sender_ip_str, std::clock() );
+		return Packet( icmp_time_ex->icmp_id, icmp_time_ex->icmp_seq + 1, sender_ip_str, std::clock() );
 	}
 
 	return Packet();
