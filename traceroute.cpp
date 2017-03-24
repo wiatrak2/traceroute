@@ -20,17 +20,28 @@ int main( int argc, const char* argv[] )
 	int pid = getpid();
 	int num = 10;
 
+	printf("%d\n", pid);
+
 	Sender s( argv[ 1 ] );
 	Receiver r( &sockfd );
 
-	for( int i = 0 ; i < 5 ; ++ i )
+	std::array< Packet, 3 > received_packets;
+	int received_packets_amount = 0;
+
+	for( int ttl = 0 ; ttl < 5 ; ++ ttl )
 	{
 
-		s.send_packet( 30, sockfd, pid, num++ );
-	
+		s.send_packet( 2, sockfd, pid, num++ );
+
+		std::clock_t sent_time = std::clock();
+		Packet sent_packet ( pid, ttl, argv[ 1 ], sent_time );
+
+		printf("Packet sent time: %ld\n", std::clock());
 		
-		 r.receive_packet();
-			
+		Packet p = r.receive_packet();
+		Packet p2 = p;
+		if(p != p2)
+			printf("OK\n");
 		
 	}
 

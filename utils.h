@@ -9,9 +9,11 @@
 #include <stdint.h>
 #include <string.h>
 #include <unistd.h>
+#include <ctime>
 #include <errno.h>
 #include <cassert>
 #include <regex>
+#include <array>
 
 
 int arg_valid ( int argc, const char* argv[] );

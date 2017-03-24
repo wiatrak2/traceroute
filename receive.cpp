@@ -22,13 +22,18 @@ Packet Receiver::receive_packet()
 	if( icmp_header->type == ICMP_ECHOREPLY )
 	{
 		printf("ECHO REPLY ");
-		return Packet( icmp_header->un.echo.id, icmp_header->un.echo.sequence, 0, true, sender_ip_str );
+		return Packet( icmp_header->un.echo.id, icmp_header->un.echo.sequence, sender_ip_str, std::clock() );
 	}
 
 	if( icmp_header->type == ICMP_TIME_EXCEEDED )
 	{
 		printf("TIME EXCEEDED ");
-		return Packet();//( ip_header->icmp_id, ip_header->icmp_seq, 0, false, sender_ip_str );
+
+		icmp_packet += 8;
+		icmp_packet += 4 * ((struct ip*) icmp_packet)->ip_hl;
+		struct icmp* icmp_time_ex = (struct icmp*) icmp_packet;
+
+		return Packet( icmp_time_ex->icmp_id, icmp_time_ex->icmp_seq, sender_ip_str, std::clock() );
 	}
 
 	return Packet();
