@@ -15,12 +15,8 @@ int main( int argc, const char* argv[] )
 		return EXIT_FAILURE;
 	}
 
-	// test sending
-
 	int pid = getpid();
 	int num = 0;
-
-	printf("%d\n", pid);
 
 	Sender s( argv[ 1 ] );
 	Receiver r( &sockfd );
@@ -28,38 +24,51 @@ int main( int argc, const char* argv[] )
 	std::array< Packet, 3 > received_packets;
 	int received_packets_amount = 0;
 
-	for( int ttl = 1 ; ttl < 30 ; ++ ttl )
+	bool destination = false;
+
+	for( int ttl = 1 ; ttl <= 30 && (!destination) ; ++ ttl )
 	{
 
-		s.send_packet( ttl, sockfd, pid, num++ );
+		for( int i = 0 ; i < 3 ; ++ i )
+			s.send_packet( ttl, sockfd, pid, num++ );
 
 		std::clock_t sent_time = std::clock();
 		Packet sent_packet ( pid, ttl, argv[ 1 ], sent_time );
 
-		printf("Packet sent time: %ld\n", std::clock());
-
-		//select test
 
 		fd_set descriptors;
 		FD_ZERO( &descriptors );
 		FD_SET( sockfd, &descriptors );
 		struct timeval tv; tv.tv_sec = 1 ; tv.tv_usec = 0;
-		int ready = select( sockfd + 1, &descriptors, NULL, NULL, &tv );
-		if( ready < 0 )
-			throw std::runtime_error( " Read from socket error " );
-
-		if( ready == 0 )
-			printf("NO PACKETS\n");
-
-		else
-		{
-			Packet p = r.receive_packet();
-			if( p == sent_packet )
-				printf("OKKK - %d, %d\n", tv.tv_sec, tv.tv_usec);
-			else
-				printf("NOOOOO\n");
-		}
 		
+		while( received_packets_amount < 3 )
+		{
+			int ready = select( sockfd + 1, &descriptors, NULL, NULL, &tv );
+
+			if( ready < 0 )
+				throw std::runtime_error( " Read from socket error " );
+
+			if( ready == 0 )
+				break;
+
+			else
+			{
+				for( int i = 0 ; i < ready ; ++ i )
+				{
+					Packet p = r.receive_packet();
+					if( p == sent_packet )
+					{
+						received_packets[ received_packets_amount ++ ] = p;
+						if( (std::string)(p.packet_ip_addr) == argv[ 1 ] )
+							destination = true;							
+					} 
+				}
+			}
+		}
+
+		printf("%*d.\t", 2, ttl);
+		print_route( received_packets, received_packets_amount, sent_time );
+		received_packets_amount = 0;
 	}
 
 

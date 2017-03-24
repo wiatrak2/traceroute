@@ -2,6 +2,7 @@
 #define packet_h 
 
 #include "utils.h"
+#include <set>
 
 class Packet
 {
@@ -25,13 +26,13 @@ public:
 	packet_ttl { ttl },
 	packet_ip_addr { ip_addr },
 	packet_time { time }
-	{ printf("Packet time: %ld\n", packet_time ); }
+	{  }
 
 	Packet& operator = ( const Packet& p );
 	bool operator == ( const Packet& p ) const;
 	bool operator != ( const Packet& p ) const;
 };
 
-
+void print_route( std::array< Packet, 3 > received_packets, int received_packets_amount, std::clock_t sent_time );
 
 #endif /* packet_h */
