@@ -1,3 +1,8 @@
+/*
+ * Wojciech Pratkowiecki nr indeksu: 281417
+ * Sieci Komputerowe II UWr
+ * traceroute
+ */
 #include "receive.h"
 
 Packet Receiver::receive_packet()
@@ -6,7 +11,7 @@ Packet Receiver::receive_packet()
 	socklen_t 			sender_len = sizeof(sender);
 	u_int8_t 			buffer[IP_MAXPACKET];
 
-	ssize_t packet_len = recvfrom (*socketfd, buffer, IP_MAXPACKET, 0, (struct sockaddr*)&sender, &sender_len);
+	ssize_t packet_len = recvfrom (*socketfd, buffer, IP_MAXPACKET, MSG_DONTWAIT, (struct sockaddr*)&sender, &sender_len);
 	if (packet_len < 0) {
 		fprintf(stderr, "recvfrom error: %s\n", strerror(errno)); 
 		return Packet( );

@@ -1,3 +1,8 @@
+/*
+ * Wojciech Pratkowiecki nr indeksu: 281417
+ * Sieci Komputerowe II UWr
+ * traceroute
+ */
 #ifndef utils_h
 #define utils_h
 

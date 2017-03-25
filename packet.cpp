@@ -1,3 +1,8 @@
+/*
+ * Wojciech Pratkowiecki nr indeksu: 281417
+ * Sieci Komputerowe II UWr
+ * traceroute
+ */
 #include "packet.h"
 
 bool Packet::operator == ( const Packet& p ) const

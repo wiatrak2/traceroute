@@ -1,3 +1,8 @@
+/*
+ * Wojciech Pratkowiecki nr indeksu: 281417
+ * Sieci Komputerowe II UWr
+ * traceroute
+ */
 #include "send.h"
 
 Sender::Sender( )
@@ -10,16 +15,6 @@ Sender::Sender( const char* ip_addr )
 	bzero( &recipient, sizeof( recipient ) );
 	recipient.sin_family = AF_INET;
 	inet_pton( AF_INET, ip_addr, &recipient.sin_addr );
-}
-
-Sender::Sender( const Sender& s )
-: recipient { s.recipient }
-{ }
-
-Sender& Sender::operator = ( const Sender& s )
-{
-	recipient = s.recipient;
-	return *this;
 }
 
 void Sender::send_packet( int ttl, const int& socket, int id, int seq )

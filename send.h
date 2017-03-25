@@ -1,3 +1,8 @@
+/*
+ * Wojciech Pratkowiecki nr indeksu: 281417
+ * Sieci Komputerowe II UWr
+ * traceroute
+ */
 #ifndef send_h
 #define send_h 
 
@@ -7,15 +12,12 @@ class Sender
 {
 
 	struct icmphdr create_icmphdr( int echo_id, int echo_seq );
-
-public:
-
 	struct sockaddr_in recipient;
+	
+public:
 
 	Sender();
 	Sender( const char* ip_addr );
-	Sender( const Sender& s );
-	Sender& operator = ( const Sender& s );
 
 	void send_packet( int ttl, const int& socket, int id, int seq );
 	

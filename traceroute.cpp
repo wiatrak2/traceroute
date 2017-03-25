@@ -1,3 +1,8 @@
+/*
+ * Wojciech Pratkowiecki nr indeksu: 281417
+ * Sieci Komputerowe II UWr
+ * traceroute
+*/
 #include "utils.h"
 #include "send.h"
 #include "packet.h"
@@ -16,7 +21,7 @@ int main( int argc, const char* argv[] )
 	}
 
 	int pid = getpid();
-	int num = 0;
+	int seq_num = 0;
 
 	Sender s( argv[ 1 ] );
 	Receiver r( &sockfd );
@@ -30,11 +35,10 @@ int main( int argc, const char* argv[] )
 	{
 
 		for( int i = 0 ; i < 3 ; ++ i )
-			s.send_packet( ttl, sockfd, pid, num++ );
+			s.send_packet( ttl, sockfd, pid, seq_num ++ );
 
 		std::chrono::steady_clock::time_point sent_time = std::chrono::steady_clock::now( );
 		Packet sent_packet ( pid, ttl, argv[ 1 ], sent_time );
-
 
 		fd_set descriptors;
 		FD_ZERO( &descriptors );
