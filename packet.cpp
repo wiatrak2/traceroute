@@ -22,7 +22,7 @@ Packet& Packet::operator = ( const Packet& p )
 	return *this;
 }
 
-void print_route( std::array< Packet, 3 > received_packets, int received_packets_amount, std::clock_t sent_time )
+void print_route( std::array< Packet, 3 > received_packets, int received_packets_amount, std::chrono::steady_clock::time_point& sent_time )
 {
 	if( ! received_packets_amount )
 	{
@@ -39,11 +39,11 @@ void print_route( std::array< Packet, 3 > received_packets, int received_packets
 
 	if( received_packets_amount == 3 )
 	{
-		std::clock_t avg_time;
+		unsigned int avg_time;
 		for( auto p : received_packets )
-			avg_time += ( p.packet_time - sent_time );
-		avg_time = 1000 * ( avg_time / 3 ) / CLOCKS_PER_SEC;
-		printf("%ldms\n", avg_time );
+			avg_time += std::chrono::duration_cast< std::chrono::milliseconds >( p.packet_time - sent_time ).count( );
+		avg_time /= 3;
+		printf("%ums\n", avg_time );
 	}
 	else
 		printf("???\n");

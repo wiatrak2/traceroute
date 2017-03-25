@@ -9,7 +9,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <unistd.h>
-#include <ctime>
+#include <chrono>
 #include <errno.h>
 #include <cassert>
 #include <regex>

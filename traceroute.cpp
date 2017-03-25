@@ -32,7 +32,7 @@ int main( int argc, const char* argv[] )
 		for( int i = 0 ; i < 3 ; ++ i )
 			s.send_packet( ttl, sockfd, pid, num++ );
 
-		std::clock_t sent_time = std::clock();
+		std::chrono::steady_clock::time_point sent_time = std::chrono::steady_clock::now( );
 		Packet sent_packet ( pid, ttl, argv[ 1 ], sent_time );
 
 

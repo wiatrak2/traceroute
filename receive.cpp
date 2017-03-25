@@ -21,7 +21,8 @@ Packet Receiver::receive_packet()
 
 	if( icmp_header->type == ICMP_ECHOREPLY )
 	{
-		return Packet( icmp_header->un.echo.id, icmp_header->un.echo.sequence / 3 + 1, sender_ip_str, std::clock() );
+		auto packet_time = std::chrono::steady_clock::now( );
+		return Packet( icmp_header->un.echo.id, icmp_header->un.echo.sequence / 3 + 1, sender_ip_str, packet_time );
 	}
 
 	if( icmp_header->type == ICMP_TIME_EXCEEDED )
@@ -30,7 +31,9 @@ Packet Receiver::receive_packet()
 		icmp_packet += 4 * ((struct ip*) icmp_packet)->ip_hl;
 		struct icmp* icmp_time_ex = (struct icmp*) icmp_packet;
 
-		return Packet( icmp_time_ex->icmp_id, icmp_time_ex->icmp_seq / 3 + 1, sender_ip_str, std::clock() );
+		auto packet_time = std::chrono::steady_clock::now( );
+
+		return Packet( icmp_time_ex->icmp_id, icmp_time_ex->icmp_seq / 3 + 1, sender_ip_str, packet_time );
 	}
 
 	return Packet();
