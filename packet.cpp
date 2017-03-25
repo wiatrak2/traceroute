@@ -39,9 +39,10 @@ void print_route( std::array< Packet, 3 > received_packets, int received_packets
 
 	if( received_packets_amount == 3 )
 	{
-		unsigned int avg_time;
+		unsigned int avg_time = 0;
 		for( auto p : received_packets )
-			avg_time += std::chrono::duration_cast< std::chrono::milliseconds >( p.packet_time - sent_time ).count( );
+				avg_time += std::chrono::duration_cast< std::chrono::milliseconds >( p.packet_time - sent_time ).count( );
+			
 		avg_time /= 3;
 		printf("%ums\n", avg_time );
 	}
