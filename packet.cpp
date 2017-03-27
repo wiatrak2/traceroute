@@ -5,6 +5,7 @@
  */
 #include "packet.h"
 
+/* dwa pakiety są takie same, jeżeli mają ten sam id oraz zostały wysłane z tym samym ttl */
 bool Packet::operator == ( const Packet& p ) const
 {
 	if( this->packet_id == p.packet_id && this->packet_ttl == p.packet_ttl )
@@ -27,22 +28,22 @@ Packet& Packet::operator = ( const Packet& p )
 	return *this;
 }
 
-void print_route( std::array< Packet, 3 > received_packets, int received_packets_amount, std::chrono::steady_clock::time_point& sent_time )
+void print_route( std::array< Packet, 3 > received_packets, int received_packets_amount, std::chrono::high_resolution_clock::time_point& sent_time )
 {
-	if( ! received_packets_amount )
+	if( ! received_packets_amount ) /* brak otrzymanych pakietów */
 	{
 		printf("*\n");
 		return;
 	}
-
+	/* uzyskiwanie zbioru adresów IP od których otrzymano odpowiedź */
 	std::set< const char* > ip_addresses;
 	for( auto i = received_packets.begin() ; i != received_packets.begin() + received_packets_amount ; ++ i )
 		ip_addresses.insert( i->packet_ip_addr );
-
+	/* wypisywanie adresów IP */
 	for( auto ip : ip_addresses )
 		printf("%*s ", 15, ip );
 
-	if( received_packets_amount == 3 )
+	if( received_packets_amount == 3 ) /* otrzymano wszystkie odpowiedzi */
 	{
 		unsigned int avg_time = 0;
 		for( auto p : received_packets )

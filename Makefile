@@ -15,6 +15,9 @@ send.o: send.cpp send.h
 packet.o: packet.cpp packet.h
 
 clean:
-	$(RM) traceroute *.o
+	$(RM) *.o
+
+distclean:
+	$(RM) traceroute *.0
 
 .PHONY: clean

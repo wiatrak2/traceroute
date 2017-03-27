@@ -11,13 +11,13 @@
 
 class Receiver
 {
-	int* socketfd;
+	int* socketfd; /* gniazdo z którego dany Receiver ma odbierać pakiety */
 
 public:
 
 	Receiver()
 	: socketfd{ nullptr }
-	{ throw std::runtime_error( " Wrong Receiver constructor " ); }
+	{ throw std::runtime_error( " Wrong Receiver constructor " ); } /* próba utworzenia Receivera bez gniazda */
 	
 	Receiver( int* socketfd )
 	: socketfd { socketfd }

@@ -10,9 +10,10 @@
 
 class Sender
 {
+	/* obiekt klasy Sender jest przywiązany do jednego docelowego adresu IP */
+	struct sockaddr_in recipient;
 
 	struct icmphdr create_icmphdr( int echo_id, int echo_seq );
-	struct sockaddr_in recipient;
 	
 public:
 

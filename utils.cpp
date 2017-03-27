@@ -4,7 +4,7 @@
  * traceroute
  */
 #include "utils.h"
-
+/* walidacja argumentów funkcji. Zgodnie ze specyfikacją - adres IPv4 */
 int arg_valid ( int argc, const char* argv[] )
 {
 	if( argc != 2 )
@@ -25,7 +25,7 @@ int arg_valid ( int argc, const char* argv[] )
 
 	return 1;
 }
-
+/* funkcja obliczająca sumę kontrolną dla nagłówka */
 u_int16_t compute_icmp_checksum (const void *buff, int length)
 {
 	u_int32_t sum;
